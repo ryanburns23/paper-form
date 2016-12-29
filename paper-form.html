@@ -1,0 +1,136 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../gold-email-input/gold-email-input.html">
+<link rel="import" href="../vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="../paper-time-input/paper-time-input.html">
+
+
+<!--
+`<paper-form>`
+creates a form with paper inputs from an options object
+
+@demo demo/index.html
+-->
+
+<dom-module id="paper-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-time-input, paper-radio-group{
+        margin-top: 20px;
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[fields]]">
+      <template is="dom-if" if="[[_isInput(item.type)]]">
+        <paper-input
+          value="{{item.value}}"
+          label="[[item.label]]"
+          required$="[[item.required]]"
+          readonly$="[[item.readonly]]"
+          auto-validate$="[[item.required]]">
+        </paper-input>
+      </template>
+      <template is="dom-if" if="[[_isEmail(item.type)]]">
+        <gold-email-input
+          value="{{item.value}}"
+          label="[[item.label]]"
+          required$="[[item.required]]"
+          readonly$="[[item.readonly]]"
+          auto-validate$="[[item.required]]">
+        </gold-email-input>
+      </template>
+      <template is="dom-if" if="[[_isRadio(item.type)]]">
+        <paper-radio-group selected="_0">
+          <template is="dom-repeat" items="[[item.items]]">
+            <paper-radio-button name="_[[index]]">[[item]]</paper-radio-button>
+          </template>
+        </paper-radio-group>
+      </template>
+      <template is="dom-if" if="[[_isDate(item.type)]]">
+        <vaadin-date-picker
+          value="{{item.value}}"
+          label="[[item.label]]"
+          required$="[[item.required]]"
+          readonly$="[[item.readonly]]">
+        </vaadin-date-picker>
+      </template>
+      <template is="dom-if" if="[[_isTime(item.type)]]">
+        <paper-time-input
+          label="[[item.label]]">
+        </paper-time-input>
+      </template>
+      <template is="dom-if" if="[[_isTextarea(item.type)]]">
+        <paper-textarea
+          value="{{item.value}}"
+          label="[[item.label]]"
+          char-counter$="[[item.maxlength]]"
+          required$="[[item.required]]"
+          maxlength="[[item.maxlength]]"
+          readonly$="[[item.readonly]]"
+          auto-validate$="[[item.required]]">
+        </paper-textarea>
+      </template>
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'paper-form',
+
+      properties: {
+        fields: {
+          type: Array,
+          value: [
+            {label: "Name", type: "input", required: true },
+            {label: "Date", type: "input", required: true, readonly: true, value: "test" },
+            {label: "Email Address", type: "email", required: true },
+            {type: "radio", required: true, items: [ "Inspection", "Reinspection" ] },
+            {label: "Date", type: "date", required: true },
+            {label: "Time", type: "time", required: true },
+            {label: "Comments", type: "textarea", required: true  },
+          ],
+        },
+      },
+
+      _isInput: function(type){
+        if (type == "input") {
+          return true;
+        };
+      },
+      _isEmail: function(type){
+        if (type == "email") {
+          return true;
+        };
+      },
+      _isRadio: function(type){
+        if (type == "radio") {
+          return true;
+        };
+      },
+      _isDate: function(type){
+        if (type == "date") {
+          return true;
+        };
+      },
+      _isTime: function(type){
+        if (type == "time") {
+          return true;
+        };
+      },
+      _isTextarea: function(type){
+        if (type == "textarea") {
+          return true;
+        };
+      },
+
+
+    });
+  </script>
+</dom-module>
