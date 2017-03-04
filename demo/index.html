@@ -16,13 +16,86 @@
     </style>
   </head>
   <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic paper-form demo</h3>
-      <demo-snippet>
-        <template>
-          <paper-form></paper-form>
-        </template>
-      </demo-snippet>
-    </div>
+
+    <dom-module id="demo-element">
+      <template>
+        <style>
+          :host {
+            display: block;
+          }
+        </style>
+
+        <paper-form fields="{{data}}"></paper-form>
+
+      </template>
+      <script>
+        Polymer({
+          is: 'demo-element',
+          properties: {
+            data: {
+              type: Array,
+              value: [
+                {
+                  "type": "input",
+                  "label": "input"
+                },
+                {
+                  "type": "textarea",
+                  "label": "textarea"
+                },
+                {
+                  "type": "email",
+                  "required": true,
+                  "label": "email"
+                },
+                {
+                  "type": "date",
+                  "year": true,
+                  "label": "date"
+                },
+                {
+                  "type": "time",
+                  "label": "time"
+                },
+                {
+                  "type": "radio",
+                  "label": "radio buttons",
+                  "items": [
+                    "Option 1",
+                    "Option 2",
+                    "Option 3"
+                  ]
+                },
+                {
+                  "type": "dropdown",
+                  "label": "dropdown",
+                  "items": [
+                    "Dropdown Option 1",
+                    "Dropdown Option 2",
+                    "Dropdown Option 3",
+                    "Dropdown Option 4"
+                  ]
+                },
+                {
+                  "type": "checkbox",
+                  label: "checkbox",
+                  "items": [
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 4"
+                  ]
+                }
+              ]
+            }
+          }
+
+        });
+      </script>
+    </dom-module>
+
+    <demo-element></demo-element>
+
+
   </body>
 </html>

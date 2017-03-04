@@ -1,4 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../paper-styles/element-styles/paper-item.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
 <link rel="import" href="../paper-radio-group/paper-radio-group.html">
@@ -6,7 +9,8 @@
 <link rel="import" href="../gold-email-input/gold-email-input.html">
 <link rel="import" href="../vaadin-date-picker/vaadin-date-picker.html">
 <link rel="import" href="../paper-time-input/paper-time-input.html">
-
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
 
 <!--
 `<paper-form>`
@@ -20,82 +24,136 @@ creates a form with paper inputs from an options object
     <style>
       :host {
         display: block;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        padding: 20px;
       }
+
+      h1{
+        @apply(--paper-forn-headline);
+      }
+
+      .item{
+        margin-bottom: 10px;
+      }
+
+      label{
+        @apply(--paper-forn-subhead);
+      }
+
       paper-time-input, paper-radio-group{
         margin-top: 20px;
       }
+
+      paper-dropdown-menu{
+        display: block;
+        max-width: 500px;
+      }
+
+      paper-checkbox{
+        margin-right: 10px;
+      }
+
+      [hidden]{
+        display: none;
+      }
     </style>
 
+    <h1 hidden$="[[!formTitle]]">[[formTitle]]</h1>
+
     <template is="dom-repeat" items="[[fields]]">
+      <div class="item">
 
-      <!-- Input -->
-      <template is="dom-if" if="[[_isEqual('input' ,item.type)]]">
-        <paper-input
-          id="_field[[index]]"
-          value="{{item.value}}"
-          label="[[item.label]]"
-          required$="[[item.required]]"
-          allowed-pattern="[[item.allowedPattern]]"
-          readonly$="[[item.readonly]]"
-          auto-validate$="[[item.required]]">
-        </paper-input>
-      </template>
+        <!-- Input -->
+        <template is="dom-if" if="[[_isEqual('input' ,item.type)]]">
+          <paper-input
+            id="_field[[index]]"
+            value="{{item.value}}"
+            label="[[item.label]]"
+            required$="[[item.required]]"
+            allowed-pattern="[[item.allowedPattern]]"
+            readonly$="[[item.readonly]]"
+            auto-validate$="[[item.required]]">
+          </paper-input>
+        </template>
 
-      <!-- Email -->
-      <template is="dom-if" if="[[_isEqual('email' ,item.type)]]">
-        <gold-email-input
-          id="_field[[index]]"
-          value="{{item.value}}"
-          label="[[item.label]]"
-          required$="[[item.required]]"
-          readonly$="[[item.readonly]]"
-          auto-validate$="[[item.required]]">
-        </gold-email-input>
-      </template>
+        <!-- Email -->
+        <template is="dom-if" if="[[_isEqual('email' ,item.type)]]">
+          <gold-email-input
+            id="_field[[index]]"
+            value="{{item.value}}"
+            label="[[item.label]]"
+            required$="[[item.required]]"
+            readonly$="[[item.readonly]]"
+            auto-validate$="[[item.required]]">
+          </gold-email-input>
+        </template>
 
-      <!-- Radio -->
-      <template is="dom-if" if="[[_isEqual('radio' ,item.type)]]">
-        <paper-radio-group selected="{{item.value}}">
+        <!-- Radio -->
+        <template is="dom-if" if="[[_isEqual('radio' ,item.type)]]">
+          <label hidden$="[[!item.label]]" for="radio[[index]]">[[item.label]]</label>
+          <paper-radio-group id="radio[[index]]" selected="{{item.value}}">
+            <template is="dom-repeat" items="[[item.items]]">
+              <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
+            </template>
+          </paper-radio-group>
+        </template>
+
+        <!-- Date -->
+        <template is="dom-if" if="[[_isEqual('date' ,item.type)]]">
+          <vaadin-date-picker
+            id="_field[[index]]"
+            value="{{item.value}}"
+            label="[[item.label]]"
+            required$="[[item.required]]"
+            readonly$="[[item.readonly]]">
+          </vaadin-date-picker>
+        </template>
+
+        <!-- Time -->
+        <template is="dom-if" if="[[_isEqual('time' ,item.type)]]">
+          <paper-time-input
+            id="_field[[index]]"
+            value="{{item.value}}"
+            required$="[[item.required]]"
+            label="[[item.label]]">
+          </paper-time-input>
+        </template>
+
+        <!-- Dropdown -->
+        <template is="dom-if" if="[[_isEqual('dropdown' ,item.type)]]">
+          <paper-dropdown-menu label="[[item.label]]">
+            <paper-listbox selected="{{item.value}}" attr-for-selected="name" class="dropdown-content" selected="1">
+              <template is="dom-repeat" items="[[item.items]]">
+                <paper-item name="[[item]]">[[item]]</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </template>
+
+        <!-- Checkbox -->
+        <template is="dom-if" if="[[_isEqual('checkbox' ,item.type)]]">
           <template is="dom-repeat" items="[[item.items]]">
-            <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
+            <paper-checkbox>[[item]]</paper-checkbox>
           </template>
-        </paper-radio-group>
-      </template>
+        </template>
 
-      <!-- Date -->
-      <template is="dom-if" if="[[_isEqual('date' ,item.type)]]">
-        <vaadin-date-picker
-          id="_field[[index]]"
-          value="{{item.value}}"
-          label="[[item.label]]"
-          required$="[[item.required]]"
-          readonly$="[[item.readonly]]">
-        </vaadin-date-picker>
-      </template>
-
-      <!-- Time -->
-      <template is="dom-if" if="[[_isEqual('time' ,item.type)]]">
-        <paper-time-input
-          id="_field[[index]]"
-          value="{{item.value}}"
-          required$="[[item.required]]"
-          label="[[item.label]]">
-        </paper-time-input>
-      </template>
-
-      <template is="dom-if" if="[[_isEqual('textarea' ,item.type)]]">
-        <paper-textarea
-          id="_field[[index]]"
-          value="{{item.value}}"
-          label="[[item.label]]"
-          rows="[[item.rows]]"
-          char-counter$="[[item.maxlength]]"
-          required$="[[item.required]]"
-          maxlength="[[item.maxlength]]"
-          readonly$="[[item.readonly]]"
-          auto-validate$="[[item.required]]">
-        </paper-textarea>
-      </template>
+        <!-- Textarea -->
+        <template is="dom-if" if="[[_isEqual('textarea' ,item.type)]]">
+          <paper-textarea
+            id="_field[[index]]"
+            value="{{item.value}}"
+            label="[[item.label]]"
+            rows="[[item.rows]]"
+            char-counter$="[[item.maxlength]]"
+            required$="[[item.required]]"
+            maxlength="[[item.maxlength]]"
+            readonly$="[[item.readonly]]"
+            auto-validate$="[[item.required]]">
+          </paper-textarea>
+        </template>
+      </div>
 
     </template>
 
@@ -105,13 +163,17 @@ creates a form with paper inputs from an options object
     Polymer({
       is: 'paper-form',
       properties: {
+        // Title of the form
+        formTitle: {
+          type: String,
+          value: "paper-form title"
+        },
         fields: {
           type: Array,
           notify: true,
           value: []
         }
       },
-
 
       validate: function(){
         var valid = true;
