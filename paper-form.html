@@ -27,10 +27,11 @@ creates a form with paper inputs from an options object
     </style>
 
     <template is="dom-repeat" items="[[fields]]">
-      <template is="dom-if" if="[[_isInput(item.type)]]">
+
+      <!-- Input -->
+      <template is="dom-if" if="[[_isEqual('input' ,item.type)]]">
         <paper-input
           id="_field[[index]]"
-          on-input="inputChnaged"
           value="{{item.value}}"
           label="[[item.label]]"
           required$="[[item.required]]"
@@ -39,7 +40,9 @@ creates a form with paper inputs from an options object
           auto-validate$="[[item.required]]">
         </paper-input>
       </template>
-      <template is="dom-if" if="[[_isEmail(item.type)]]">
+
+      <!-- Email -->
+      <template is="dom-if" if="[[_isEqual('email' ,item.type)]]">
         <gold-email-input
           id="_field[[index]]"
           value="{{item.value}}"
@@ -49,14 +52,18 @@ creates a form with paper inputs from an options object
           auto-validate$="[[item.required]]">
         </gold-email-input>
       </template>
-      <template is="dom-if" if="[[_isRadio(item.type)]]">
+
+      <!-- Radio -->
+      <template is="dom-if" if="[[_isEqual('radio' ,item.type)]]">
         <paper-radio-group selected="{{item.value}}">
           <template is="dom-repeat" items="[[item.items]]">
             <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
           </template>
         </paper-radio-group>
       </template>
-      <template is="dom-if" if="[[_isDate(item.type)]]">
+
+      <!-- Date -->
+      <template is="dom-if" if="[[_isEqual('date' ,item.type)]]">
         <vaadin-date-picker
           id="_field[[index]]"
           value="{{item.value}}"
@@ -65,18 +72,23 @@ creates a form with paper inputs from an options object
           readonly$="[[item.readonly]]">
         </vaadin-date-picker>
       </template>
-      <template is="dom-if" if="[[_isTime(item.type)]]">
+
+      <!-- Time -->
+      <template is="dom-if" if="[[_isEqual('time' ,item.type)]]">
         <paper-time-input
           id="_field[[index]]"
           value="{{item.value}}"
+          required$="[[item.required]]"
           label="[[item.label]]">
         </paper-time-input>
       </template>
-      <template is="dom-if" if="[[_isTextarea(item.type)]]">
+
+      <template is="dom-if" if="[[_isEqual('textarea' ,item.type)]]">
         <paper-textarea
           id="_field[[index]]"
           value="{{item.value}}"
           label="[[item.label]]"
+          rows="[[item.rows]]"
           char-counter$="[[item.maxlength]]"
           required$="[[item.required]]"
           maxlength="[[item.maxlength]]"
@@ -84,6 +96,7 @@ creates a form with paper inputs from an options object
           auto-validate$="[[item.required]]">
         </paper-textarea>
       </template>
+
     </template>
 
   </template>
@@ -95,32 +108,10 @@ creates a form with paper inputs from an options object
         fields: {
           type: Array,
           notify: true,
-          value: [
-            {label: "Name", type: "input", required: true },
-            {label: "Date", type: "input", required: true, readonly: true, value: "test" },
-            {label: "Email Address", type: "email", required: true },
-            {type: "radio", required: true, selected: "yoooo", items: [ "Inspection", "Reinspection" ] },
-            {label: "Date", type: "date", required: true },
-            {label: "Time", type: "time", required: true },
-            {label: "Comments", type: "textarea", required: true  },
-          ],
-        },
-        name: {
-          type: String,
-          notify: true,
-        },
-      },
-
-      inputChnaged: function(e){
-        var item = e.model.__data__.item;
-        if (item.label == "Name") {
-          this.name = item.value;
+          value: []
         }
       },
 
-      _computeItem: function(val){
-        console.log(val);
-      },
 
       validate: function(){
         var valid = true;
@@ -133,36 +124,13 @@ creates a form with paper inputs from an options object
         }
         return valid;
       },
-      _isInput: function(type){
-        if (type == "input") {
+
+      _isEqual: function(n1, n2){
+        if (n1 == n2) {
           return true;
-        };
-      },
-      _isEmail: function(type){
-        if (type == "email") {
-          return true;
-        };
-      },
-      _isRadio: function(type){
-        if (type == "radio") {
-          return true;
-        };
-      },
-      _isDate: function(type){
-        if (type == "date") {
-          return true;
-        };
-      },
-      _isTime: function(type){
-        if (type == "time") {
-          return true;
-        };
-      },
-      _isTextarea: function(type){
-        if (type == "textarea") {
-          return true;
-        };
-      },
+        }
+      }
+
     });
   </script>
 </dom-module>
