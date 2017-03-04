@@ -116,6 +116,9 @@ creates a form with paper inputs from an options object
           <paper-time-input
             id="_field[[index]]"
             value="{{item.value}}"
+            hour="{{item.hour}}"
+            min="{{item.min}}"
+            am-pm="{{item.amPm}}"
             required$="[[item.required]]"
             label="[[item.label]]">
           </paper-time-input>
