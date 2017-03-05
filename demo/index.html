@@ -10,6 +10,7 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../show-json/show-json.html">
     <link rel="import" href="../paper-form.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -22,10 +23,24 @@
         <style>
           :host {
             display: block;
+            @apply(--layout-vertical);
+          }
+          paper-form{
+            width: 100%;
+          }
+          .output{
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
           }
         </style>
 
         <paper-form fields="{{data}}"></paper-form>
+
+        <div class="output">
+          <h2>JSON OUTPUT</h2>
+          <show-json json="[[data]]"></show-json>
+        </div>
 
       </template>
       <script>
@@ -37,25 +52,33 @@
               value: [
                 {
                   "type": "input",
-                  "label": "input"
+                  "label": "input",
+                  "value": "Ryan Burns"
                 },
                 {
                   "type": "textarea",
-                  "label": "textarea"
+                  "label": "textarea",
+                  "value": "Yo this is a cool textarea\nyooooooo"
                 },
                 {
                   "type": "email",
                   "required": true,
-                  "label": "email"
+                  "label": "email",
+                  "value": "ryan@ryanburns.io"
                 },
                 {
                   "type": "date",
                   "year": true,
-                  "label": "date"
+                  "label": "date",
+                  "value": "2017-03-03"
                 },
                 {
                   "type": "time",
-                  "label": "time"
+                  "label": "time",
+                  "hour": "4",
+                  "min": "03",
+                  "value": "4:03 AM",
+                  "amPm": "AM"
                 },
                 {
                   "type": "radio",
@@ -64,26 +87,33 @@
                     "Option 1",
                     "Option 2",
                     "Option 3"
-                  ]
+                  ],
+                  "value": "Option 2"
                 },
                 {
                   "type": "dropdown",
                   "label": "dropdown",
                   "items": [
-                    "Dropdown Option 1",
-                    "Dropdown Option 2",
-                    "Dropdown Option 3",
-                    "Dropdown Option 4"
-                  ]
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 4"
+                  ],
+                  "value": "Option 4"
                 },
                 {
                   "type": "checkbox",
-                  label: "checkbox",
+                  "label": "checkbox",
                   "items": [
                     "Option 1",
                     "Option 2",
                     "Option 3",
                     "Option 4"
+                  ],
+                  "selectedValues": [
+                    "Option 3",
+                    "Option 4",
+                    "Option 2"
                   ]
                 }
               ]

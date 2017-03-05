@@ -11,6 +11,7 @@
 <link rel="import" href="../paper-time-input/paper-time-input.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
 
 <!--
 `<paper-form>`
@@ -54,6 +55,10 @@ creates a form with paper inputs from an options object
       paper-checkbox{
         margin-right: 10px;
       }
+      .checkboxes{
+        display: block;
+        margin-top: 25px;
+      }
 
       [hidden]{
         display: none;
@@ -94,7 +99,7 @@ creates a form with paper inputs from an options object
         <template is="dom-if" if="[[_isEqual('radio' ,item.type)]]">
           <label hidden$="[[!item.label]]" for="radio[[index]]">[[item.label]]</label>
           <paper-radio-group id="radio[[index]]" selected="{{item.value}}">
-            <template is="dom-repeat" items="[[item.items]]">
+            <template is="dom-repeat" items="{{item.items}}">
               <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
             </template>
           </paper-radio-group>
@@ -137,9 +142,11 @@ creates a form with paper inputs from an options object
 
         <!-- Checkbox -->
         <template is="dom-if" if="[[_isEqual('checkbox' ,item.type)]]">
-          <template is="dom-repeat" items="[[item.items]]">
-            <paper-checkbox>[[item]]</paper-checkbox>
-          </template>
+          <iron-selector selected-attribute="checked" selected-values="{{item.selectedValues}}" attr-for-selected="name" multi class="checkboxes">
+            <template is="dom-repeat" items="[[item.items]]">
+              <paper-checkbox name="[[item]]">[[item]]</paper-checkbox>
+            </template>
+          </iron-selector>
         </template>
 
         <!-- Textarea -->
