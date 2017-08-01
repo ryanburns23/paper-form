@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-styles/typography.html">
-<link rel="import" href="../paper-styles/element-styles/paper-item.html">
+<link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
@@ -29,18 +29,17 @@ creates a form with paper inputs from an options object
         margin: 0 auto;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
         padding: 20px;
+        @apply --paper-font-common-base;
       }
 
       h1{
-        @apply(--paper-forn-headline);
+        @apply --paper-font-display1;
       }
-
+      label{
+        @apply --paper-font-subhead;
+      }
       .item{
         margin-bottom: 10px;
-      }
-
-      label{
-        @apply(--paper-forn-subhead);
       }
 
       paper-time-input, paper-radio-group{
@@ -132,7 +131,7 @@ creates a form with paper inputs from an options object
         <!-- Dropdown -->
         <template is="dom-if" if="[[_isEqual('dropdown' ,item.type)]]">
           <paper-dropdown-menu label="[[item.label]]">
-            <paper-listbox selected="{{item.value}}" attr-for-selected="name" class="dropdown-content" selected="1">
+            <paper-listbox selected="{{item.value}}" attr-for-selected="name" slot="dropdown-content" selected="1">
               <template is="dom-repeat" items="[[item.items]]">
                 <paper-item name="[[item]]">[[item]]</paper-item>
               </template>
@@ -176,8 +175,9 @@ creates a form with paper inputs from an options object
         // Title of the form
         formTitle: {
           type: String,
-          value: "paper-form title"
+          value: ''
         },
+        // Fields
         fields: {
           type: Array,
           notify: true,
@@ -189,7 +189,7 @@ creates a form with paper inputs from an options object
         var valid = true;
         for (var i = 0; i < this.fields.length; i++) {
           if (this.fields[i].required && this.fields[i].type != "radio") {
-            if ( !this.$$("#_field"+i).validate() ) {
+            if ( !this.shadowRoot.querySelector("#_field"+i).validate() ) {
               valid = false;
             }
           }

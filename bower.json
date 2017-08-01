@@ -3,24 +3,24 @@
   "description": "creates a form with paper inputs from an options object",
   "main": "paper-form.html",
   "dependencies": {
-    "polymer": "Polymer/polymer",
-    "paper-input": "PolymerElements/paper-input",
-    "paper-radio-group": "PolymerElements/paper-radio-group",
-    "paper-radio-button": "PolymerElements/paper-radio-button",
-    "gold-email-input": "PolymerElements/gold-email-input",
-    "vaadin-date-picker": "vaadin/vaadin-date-picker",
-    "paper-time-input": "ryanburns23/paper-time-input",
-    "paper-styles": "PolymerElements/paper-styles#^1.2.0",
-    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu",
-    "paper-listbox": "PolymerElements/paper-listbox",
-    "paper-checkbox": "PolymerElements/paper-checkbox#^1.4.2",
-    "iron-selector": "PolymerElements/iron-selector#^1.5.2"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.0",
+    "paper-item": "PolymerElements/paper-item#^2.0.0",
+    "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
+    "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0",
+    "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.0",
+    "paper-time-input": "ryanburns23/paper-time-input#^2.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^2.0.0",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.0",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
+    "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.0",
+    "iron-selector": "PolymerElements/iron-selector#^2.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
     "web-component-tester": "^4.0.0",
-    "show-json": "ryanburns23/show-json",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "show-json": "ryanburns23/show-json#^2.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   }
 }
