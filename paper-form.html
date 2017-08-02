@@ -44,6 +44,15 @@ creates a form with paper inputs from an options object
       paper-time-input, paper-radio-group{
         margin-top: 20px;
       }
+      label{
+        @apply --layout-block;
+        margin-bottom: 5px;
+        border-bottom: 1px solid transparent;
+      }
+      label[invalid]{
+        color: red;
+        border-bottom: 1px solid red;
+      }
 
       paper-dropdown-menu{
         display: block;
@@ -98,7 +107,7 @@ creates a form with paper inputs from an options object
 
         <!-- Radio -->
         <template is="dom-if" if="[[_isEqual('radio' ,item.type)]]">
-          <label hidden$="[[!item.label]]" for="radio[[index]]">[[item.label]]</label>
+          <label id="_label[[index]]" hidden$="[[!item.label]]" for="radio[[index]]">[[item.label]]</label>
           <paper-radio-group id="radio[[index]]" selected="{{item.value}}">
             <template is="dom-repeat" items="{{item.items}}">
               <paper-radio-button name="[[item]]">[[item]]</paper-radio-button>
@@ -143,11 +152,14 @@ creates a form with paper inputs from an options object
 
         <!-- Checkbox -->
         <template is="dom-if" if="[[_isEqual('checkbox' ,item.type)]]">
-          <iron-selector selected-attribute="checked" selected-values="{{item.selectedValues}}" attr-for-selected="name" multi class="checkboxes">
-            <template is="dom-repeat" items="[[item.items]]">
-              <paper-checkbox name="[[item]]">[[item]]</paper-checkbox>
-            </template>
-          </iron-selector>
+          <div class="checkboxes">
+            <label id="_label[[index]]">[[item.label]]</label>
+            <iron-selector selected-attribute="checked" selected-values="{{item.selectedValues}}" attr-for-selected="name" multi>
+              <template is="dom-repeat" items="[[item.items]]">
+                <paper-checkbox name="[[item]]">[[item]]</paper-checkbox>
+              </template>
+            </iron-selector>
+          </div>
         </template>
 
         <!-- Textarea -->
@@ -190,9 +202,27 @@ creates a form with paper inputs from an options object
       validate: function(){
         var valid = true;
         for (var i = 0; i < this.fields.length; i++) {
-          if (this.fields[i].required && this.fields[i].type != "radio") {
-            if ( !this.shadowRoot.querySelector("#_field"+i).validate() ) {
-              valid = false;
+          if (this.fields[i].required) {
+            if(this.fields[i].type != "radio" && this.fields[i].type != "checkbox"){
+              if ( !this.shadowRoot.querySelector("#_field"+i).validate() ) {
+                valid = false;
+              }
+            }else{
+              if (this.fields[i].type == "checkbox") {
+                if(!this.fields[i].selectedValues.length){
+                  valid = false;
+                  this.shadowRoot.querySelector("#_label" + i).setAttribute("invalid", "");
+                }else{
+                  this.shadowRoot.querySelector("#_label" + i).removeAttribute("invalid");
+                }
+              }else if (this.fields[i].type == "radio") {
+                if(!this.fields[i].value){
+                  valid = false;
+                  this.shadowRoot.querySelector("#_label" + i).setAttribute("invalid", "");
+                }else{
+                  this.shadowRoot.querySelector("#_label" + i).removeAttribute("invalid");
+                }
+              }
             }
           }
         }

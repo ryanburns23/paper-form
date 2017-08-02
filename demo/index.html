@@ -35,7 +35,9 @@
           }
         </style>
 
-        <paper-form fields="{{data}}"></paper-form>
+        <paper-form id="form" fields="{{data}}"></paper-form>
+
+        <button on-tap="validate">VALIDATE</button>
 
         <div class="output">
           <h2>JSON OUTPUT</h2>
@@ -53,18 +55,13 @@
                 {
                   "type": "input",
                   "label": "input",
-                  "value": "Ryan Burns"
+                  "value": "Ryan Burns",
+                  "required": true
                 },
                 {
                   "type": "textarea",
                   "label": "textarea",
                   "value": "Yo this is a cool textarea\nyooooooo"
-                },
-                {
-                  "type": "email",
-                  "required": true,
-                  "label": "email",
-                  "value": "ryan@ryanburns.io"
                 },
                 {
                   "type": "date",
@@ -88,7 +85,7 @@
                     "Option 2",
                     "Option 3"
                   ],
-                  "value": "Option 2"
+                  "required": true
                 },
                 {
                   "type": "dropdown",
@@ -103,21 +100,23 @@
                 },
                 {
                   "type": "checkbox",
-                  "label": "checkbox",
                   "items": [
-                    "Option 1",
-                    "Option 2",
-                    "Option 3",
-                    "Option 4"
+                    "Stored Energy (Electric, Pneumatic, Hydrolic, Other)",
+                    "Tool (Failure or Misuse)",
+                    "Equipment (Failure or Misuse)",
+                    "Access (Not Provided, Not Identified, Not Restricted, Guards, Barriers, Clutter",
+                    "Crush Point (Not Identified or Restricted)"
                   ],
-                  "selectedValues": [
-                    "Option 3",
-                    "Option 4",
-                    "Option 2"
-                  ]
-                }
+                  "selectedValues": [],
+                  "required": true,
+                  "label": "Check all hazards that apply"
+                },
               ]
             }
+          },
+
+          validate(){
+            this.$.form.validate();
           }
 
         });
