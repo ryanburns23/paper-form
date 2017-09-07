@@ -6,11 +6,12 @@
 <link rel="import" href="../paper-input/paper-textarea.html">
 <link rel="import" href="../paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../paper-radio-button/paper-radio-button.html">
-<link rel="import" href="../vaadin-date-picker/vaadin-date-picker.html">
 <link rel="import" href="../paper-time-input/paper-time-input.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="../vaadin-material-theme/vaadin-date-picker.html">
 
 <!--
 `<paper-form>`
@@ -41,7 +42,8 @@ creates a form with paper inputs from an options object
         margin-bottom: 10px;
       }
 
-      paper-time-input, paper-radio-group{
+      paper-time-input, 
+      paper-radio-group{
         margin-top: 20px;
       }
       label{
@@ -54,9 +56,10 @@ creates a form with paper inputs from an options object
         border-bottom: 1px solid red;
       }
 
-      paper-dropdown-menu{
+      paper-dropdown-menu,
+      vaadin-date-picker{
         display: block;
-        max-width: 500px;
+        width: 100%;
       }
 
       paper-checkbox{
